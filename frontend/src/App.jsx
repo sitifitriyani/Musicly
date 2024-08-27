@@ -1,12 +1,15 @@
+import { Outlet } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Admin from './pages/Admin';
 
 function App() {
   return (
     <div>
-      {/* <Sidebar /> */}
+      {/* <Login /> */}
+      {/* <Outlet />  */}
       {/* <Home /> */}
-      <Login />
+      <Admin />
       {/* <RightSection /> */}
     </div>
   );

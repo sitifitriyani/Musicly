@@ -1,6 +1,7 @@
 // import  { useEffect, useState } from 'react';
 // import api from './services/api';
 
+import Header from "../components/Header";
 import Player from "../components/Player";
 import Sidebar from "../components/Sidebar";
 
@@ -20,21 +21,9 @@ const Home = () => {
 
   return (
     <div className="flex flex-col h-screen bg-gray-100">
-      <Sidebar />
+      <Header />
       <main className="flex flex-1 overflow-hidden">
-        <aside className="w-64 bg-gray-800 text-white p-5">
-          <h2 className="text-2xl font-bold mb-5">Your Playlists</h2>
-          <ul className="space-y-2">
-            {/* {playlists.map((playlist) => (
-              <li
-                key={playlist.id}
-                className="p-2 rounded cursor-pointer hover:bg-gray-700"
-              >
-                {playlist.title}
-              </li>
-            ))} */}
-          </ul>
-        </aside>
+      <Sidebar />
         <div className="flex-1 p-5">
           <h2 className="text-2xl font-bold mb-5">Tracks</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
