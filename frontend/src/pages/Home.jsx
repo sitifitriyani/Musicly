@@ -1,9 +1,8 @@
 // import  { useEffect, useState } from 'react';
 // import api from './services/api';
 
-import Header from "../components/Header";
-import Player from "../components/Player";
-import Sidebar from "../components/Sidebar";
+import Login from "./Login";
+
 
 const Home = () => {
   // const [playlists, setPlaylists] = useState([]);
@@ -20,12 +19,14 @@ const Home = () => {
   // }, []);
 
   return (
+  
     <div className="flex flex-col h-screen bg-gray-100">
-      <Header />
+      <Login/>
+      {/* <Header /> */}
       <main className="flex flex-1 overflow-hidden">
-      <Sidebar />
+      {/* <Sidebar /> */}
         <div className="flex-1 p-5">
-          <h2 className="text-2xl font-bold mb-5">Tracks</h2>
+          <h2 className="text-2xl font-bold mb-5">ini halaman home</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
             {/* {tracks.map((track) => (
               <div
@@ -47,7 +48,7 @@ const Home = () => {
           </div>
         </div>
       </main>
-      <Player />
+      {/* <Player /> */}
     </div>
   );
 };

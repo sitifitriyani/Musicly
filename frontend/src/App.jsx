@@ -1,15 +1,15 @@
 import { Outlet } from 'react-router-dom';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Admin from './pages/Admin';
+// import Home from './pages/Home';
+// import Login from './pages/Login';
+// import Admin from './pages/Admin';
 
 function App() {
   return (
     <div>
       {/* <Login /> */}
-      {/* <Outlet />  */}
+      <Outlet /> 
       {/* <Home /> */}
-      <Admin />
+      {/* <Admin /> */}
       {/* <RightSection /> */}
     </div>
   );

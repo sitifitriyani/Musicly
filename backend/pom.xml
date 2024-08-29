@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>org.fitri</groupId>
-	<artifactId>classic</artifactId>
+	<artifactId>musicly</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>classic</name>
+	<name>musicly</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -58,16 +58,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-    		<groupId>com.nimbusds</groupId>
-    		<artifactId>nimbus-jose-jwt</artifactId>
-    		<version>9.40</version>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 
 	<build>
