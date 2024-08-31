@@ -51,53 +51,56 @@ export default function Genre() {
             {/* Navbar */}
          <NavbarAdmin />
             {/* Main content */}
-            <div className="flex flex-1">
+            <main className="bg-gray-900 min-h-screen p-5 flex gap-5">
                 {/* Sidebar */}
-              <SidebarAdmin />
-                {/* Main content */}
-                <main className="flex-1 p-6">
-                    <div className="flex justify-between items-center mb-4">
-                        <h1 className="text-2xl font-semibold">Genre</h1>
+                <div className="w-60 h-max bg-gray-800 rounded-lg">
+                    <SidebarAdmin />
+                </div>
+                                {/* Main content */}
+                <div className="flex-1 bg-gray-800 rounded-lg">
+                    <div className="flex justify-between p-3 items-center">
+                        <h1 className="text-2xl font-bold text-gray-50">Genre</h1>
                         <Link to="/createGenre" className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">Create Genre</Link>
                     </div>
 
-                    <div className="mb-4">
+                    <div className="p-3">
                         <input
                             type="text"
                             placeholder="Search genre..."
-                            className="p-2 border border-gray-300 rounded w-full"
+                            className="p-2 bg-gray-700 rounded w-full"
                         />
                     </div>
 
-                    <table className="min-w-full bg-white border border-gray-300 rounded">
+                    <table className="w-full p-5 bg-gray-700 text-white rounded ">
                         <thead>
                             <tr>
-                                <th className="p-2 border-b">ID</th>
-                                <th className="p-2 border-b">Title</th>
-                                <th className="p-2 border-b" colSpan="2">Actions</th>
+                                <th className="p-2 border">ID</th>
+                                <th className="p-2 border">Genre</th>
+                                <th className="p-2 border" colSpan="2">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {genres.map(genres => (
                                 <tr key={genres.id}>
-                                    <td className="p-2 border-b">{genres.id}</td>
-                                    <td className="p-2 border-b">{genres.title}</td>
-                                    <td className="p-2 border-b">
+                                    <td className="p-2 border">{genres.id}</td>
+                                    <td className="p-2 border">{genres.genre}</td>
+                                    <td className="flex justify-evenly p-2 border ">
                                     <button onClick={() => handleEdit(genres)} className="text-blue-500 hover:underline flex items-center gap-2">
                                             <Pencil className="w-4 h-4" /> Edit
+                                        </button>  
+                                        <button onClick={() => handleDelete(genres.id)} className="text-red-500 hover:underline flex items-center gap-2">
+                                            <Trash className="w-4 h-4" /> Delete
                                         </button>                                   
                                         </td>
-                                    <td className="p-2 border-b">
-                                    <button onClick={() => handleDelete(genres.id)} className="text-red-500 hover:underline flex items-center gap-2">
-                                            <Trash className="w-4 h-4" /> Delete
-                                        </button>                                    
-                                        </td>
+                                    {/* <td className="p-2 border-b">
+                                                                      
+                                        </td> */}
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-                </main>
             </div>
+                </main>
         </div>
     );
 };

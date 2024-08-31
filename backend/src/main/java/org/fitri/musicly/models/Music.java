@@ -21,8 +21,6 @@ import lombok.Setter;
 
     private Double duration;
 
-    private Integer year;
-
     private String songUrl;
     
     private String imageUrl;

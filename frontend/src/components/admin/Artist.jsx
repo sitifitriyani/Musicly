@@ -49,11 +49,13 @@ export default function Artist() {
                 </div>
             )}
             <NavbarAdmin />
-            <div className="flex flex-1">
-                <SidebarAdmin />
-                <main className="flex-1 p-6">
-                    <div className="flex justify-between items-center mb-4">
-                        <h1 className="text-2xl font-semibold">Artist</h1>
+                <main className="bg-gray-900 min-h-screen p-5 flex gap-5">
+                <div className="w-60 h-max bg-gray-800 rounded-lg">
+                    <SidebarAdmin />
+                </div>
+                <div className="flex-1 bg-gray-800 rounded-lg">
+                    <div className="flex justify-between items-center p-3">
+                        <h1 className="text-2xl font-bold text-gray-50">Artist</h1>
                         <Link
                             to="/createArtist"
                             className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
@@ -62,37 +64,38 @@ export default function Artist() {
                         </Link>
                     </div>
 
-                    <div className="mb-4">
+                    <div className="p-3">
                         <input
                             type="text"
                             placeholder="Search Artist..."
-                            className="p-2 border border-gray-300 rounded w-full"
+                            className="p-2 bg-gray-700 rounded w-full"
                         />
                     </div>
 
-                    <table className="min-w-full bg-white border border-gray-300 rounded">
+                    <table className="w-full p-5 bg-gray-700 text-white rounded">
                         <thead>
                             <tr>
-                                <th className="p-2 border-b">ID</th>
-                                <th className="p-2 border-b">Name</th>
-                                <th className="p-2 border-b">Country</th>
-                                <th className="p-2 border-b">Image</th>
-                                <th className="p-2 border-b" colSpan="2">Actions</th>
+                                <th className="p-2 border">ID</th>
+                                <th className="p-2 border">Name</th>
+                                <th className="p-2 border">Country</th>
+                                <th className="p-2 border">Image</th>
+                                <th className="p-2 border" colSpan="2">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {artists.map(artist => (
                                 <tr key={artist.id}>
-                                    <td className="p-2 border-b">{artist.id}</td>
-                                    <td className="p-2 border-b">{artist.name}</td>
-                                    <td className="p-2 border-b">{artist.country}</td>
-                                    <td className="p-2 border-b"><img src={artist.imageUrl} alt={artist.name} className="w-16 h-16 object-cover" /></td>
-                                    <td className="p-2 border-b">
+                                    <td className="p-2 border">{artist.id}</td>
+                                    <td className="p-2 border">{artist.name}</td>
+                                    <td className="p-2 border">{artist.country}</td>
+                                    <td className="p-2 border">
+                                        <img src={artist.imageUrl} alt={artist.name} className="w-16 h-16 object-cover" /></td>
+                                    <td className="p-2 border">
                                         <button onClick={() => handleEdit(artist)} className="text-blue-500 hover:underline flex items-center gap-2">
                                             <Pencil className="w-4 h-4" /> Edit
                                         </button>
                                     </td>
-                                    <td className="p-2 border-b">
+                                    <td className="p-2 border">
                                         <button onClick={() => handleDelete(artist.id)} className="text-red-500 hover:underline flex items-center gap-2">
                                             <Trash className="w-4 h-4" /> Delete
                                         </button>
@@ -101,8 +104,8 @@ export default function Artist() {
                             ))}
                         </tbody>
                     </table>
-                </main>
             </div>
+                </main>
         </div>
     );
 }

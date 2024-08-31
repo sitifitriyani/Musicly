@@ -1,33 +1,48 @@
-// Navbar.js
-// import { Link } from 'react-router-dom';
-
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
-const Header = () => {
-    return (
-      <nav className="bg-gray-800 text-white p-4">
-        <div className="container mx-auto flex items-center justify-between">
-          {/* <Link to="/" className="text-2xl font-bold">
-            MusicApp
-          </Link> */}
-          <a href="">MusicApp</a>
-          <ul className="flex space-x-4">
-            <li>
-              <Link to="/" className="hover:text-gray-400">Home</Link>
-            </li>
-          </ul>
-          <div className="flex space-x-4">
-            <Link to="/login" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-            Login
-            </Link>
-            {/* <Link to="/register" className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600"> */}
-              <a href="">register</a>
-            {/* </Link> */}
-          </div>
-        </div>
-      </nav>
-    );
+export default function Header() {
+  const [isProfileOpen, setProfileOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleProfileClick = () => {
+    alert("Nama yang login");
   };
-  
-  export default Header;
-  
+
+  const handleLogout = () => {
+    alert("Logout clicked");
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  return (
+    <nav className="bg-gray-800 text-white p-4">
+      <div className="mx-auto flex items-center justify-between">
+        <a href="#" className="text-2xl font-bold">Musicly</a>
+        <div className="flex space-x-4 items-center">
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            placeholder="Search"
+            className="p-2 rounded bg-gray-700 text-white placeholder-gray-400"
+          />
+          <button
+            onClick={handleProfileClick}
+            className="bg-gray-600 px-4 py-2 rounded hover:bg-gray-500"
+          >
+            Profile
+          </button>
+          <button
+            onClick={handleLogout}
+            className="bg-red-500 px-4 py-2 rounded hover:bg-red-600"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </nav>
+  );
+}

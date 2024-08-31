@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+// import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const NavbarAdmin = () => {
@@ -29,14 +29,17 @@ const NavbarAdmin = () => {
     // };
 
     return (
-        <nav className="bg-purple-600 text-white p-4 flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-            <img src="../img/icons/purple-play-button.png" alt="Logo" className="w-8 h-8" />
-            <span className="text-lg font-semibold">Musicly</span>
+        <nav className="flex items-center justify-between p-5 bg-gray-800 text-white border-b border-gray-700 h-16">
+        <div className="flex items-center gap-2 font-bold text-xl">
+            <img src="/img/icons/purple-play-button.png" alt="Musicly Logo" className="w-8 h-8" />
+            <span>Musicly</span>
         </div>
-        <div className="flex items-center space-x-4">
-            <span>Admin</span>
-            <Link to="/logout" className="hover:underline">Logout</Link>
+        <div className="flex items-center gap-5">
+            <div className="flex items-center gap-2">
+                <i className="fas fa-user"></i>
+                {/* {user && <span>{user.fname} {user.lname}</span>} */}
+            </div>
+            <Link to="/logout" className="bg-gray-700 text-white px-4 py-2 rounded-full">Logout</Link>
         </div>
     </nav>
 

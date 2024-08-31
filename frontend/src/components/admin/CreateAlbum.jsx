@@ -1,39 +1,111 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import SidebarAdmin from './SidebarAdmin';
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import SidebarAdmin from "./SidebarAdmin";
+import NavbarAdmin from './NavbarAdmin';
 
 export default function CreateAlbum() {
-    const [user, setUser] = useState(null);
+    const [artists, setArtists] = useState([]);
+    const [albums, setAlbums] = useState({
+        id: "",
+        name: "",
+        releaseYear: "",
+        imageUrl: "",
+        artist: {
+            id: '',
+            name: ''
+        }
+    });
+    const [alertMessage, setAlertMessage] = useState(null);
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
-            axios.get(`/album`)
-                .then(response => {
-                    setUser(response.data);
-                })
-                .catch(error => {
-                    console.error("There was an error fetching the user data!", error);
-                });
-        
-    }, [navigate]);
+        // Fetch artists
+        axios.get("http://localhost:8080/artist")
+            .then((response) => {
+                setArtists(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching artists:", error);
+            });
+
+        // Check if we're in edit mode
+        if (location.state && location.state.albums) {
+            setAlbums(location.state.albums);
+        }
+    }, [location.state]);
+
+    function handleSave(event) {
+        event.preventDefault();
+        if (albums.id) {
+            handleEdit();
+        } else {
+            handleAdd();
+        }
+    }
+
+    function handleEdit() {
+        const formData = new FormData();
+        formData.append('title', albums.title);
+        formData.append('duration', albums.duration);
+        formData.append('albumId', albums.album.id);
+        formData.append('artistId', albums.album.artist.id);
+        formData.append('genreId', albums.genre.id);
+        if (albums.songUrl) formData.append('song', albums.songUrl);
+        if (albums.imageUrl) formData.append('imageUrl', albums.imageUrl);
+
+        axios.put(`http://localhost:8080/album/${albums.id}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then((response) => {
+            if (response.status === 200) {
+                setAlertMessage("Track successfully updated!");
+                navigate('/albums');
+            } else {
+                setAlertMessage("Failed to update track.");
+            }
+        })
+        .catch((error) => {
+            console.error("Error updating track:", error);
+            setAlertMessage("Failed to update track.");
+        });
+    }
+
+    function handleAdd() {
+        const formData = new FormData();
+        formData.append('title', albums.title);
+        formData.append('duration', albums.duration);
+        formData.append('albumId', albums.album.id);
+        formData.append('artistId', albums.album.artist.id);
+        formData.append('genreId', albums.genre.id);
+        if (albums.songUrl) formData.append('song', albums.songUrl);
+        if (albums.imageUrl) formData.append('imageUrl', albums.imageUrl);
+
+        axios.post("http://localhost:8080/album", formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then((response) => {
+            if (response.status === 201) {
+                setAlertMessage("New track added successfully!");
+                navigate('/albums');
+            } else {
+                setAlertMessage("Failed to add new track.");
+            }
+        })
+        .catch((error) => {
+            console.error("Error adding new track:", error);
+            setAlertMessage("Failed to add new track.");
+        });
+    }
 
     return (
         <div>
-            <nav className="flex items-center justify-between p-5 bg-gray-800 text-white border-b border-gray-700 h-16">
-                <div className="flex items-center gap-2 font-bold text-xl">
-                    <img src="/img/icons/purple-play-button.png" alt="Musicly Logo" className="w-8 h-8" />
-                    <span>Musicly</span>
-                </div>
-                <div className="flex items-center gap-5">
-                    <div className="flex items-center gap-2">
-                        <i className="fas fa-user"></i>
-                        {/* {user && <span>{user.fname} {user.lname}</span>} */}
-                    </div>
-                    <Link to="/logout" className="bg-gray-700 text-white px-4 py-2 rounded-full">Logout</Link>
-                </div>
-            </nav>
-
+            <NavbarAdmin />
             <main className="bg-gray-900 min-h-screen p-5 flex gap-5">
                 <div className="w-60 h-max bg-gray-800 rounded-lg">
                     <SidebarAdmin />
@@ -41,31 +113,83 @@ export default function CreateAlbum() {
 
                 <div className="flex-1 bg-gray-800 rounded-lg">
                     <div className="flex items-center justify-between p-5 border-b border-gray-700 text-white">
-                        <h2 className="text-xl font-bold">Create Album</h2>
+                        <h2 className="text-xl font-bold">{albums.id ? "Edit Album" : "Create Album"}</h2>
                     </div>
                     <div className="p-5">
-                        <form action="/api/albums" method="post" encType="multipart/form-data" className="flex flex-col gap-5">
-                            <img src="" alt="" id="albumCover" className="w-80 h-80 object-cover mb-5" />
+                        <form onSubmit={handleSave} className="flex flex-col gap-5">
+                            <img
+                                src={albums.imageUrl || ""}
+                                id="albumCover"
+                                className="w-80 h-80 object-cover mb-5"
+                                alt="Album Cover"
+                            />
                             <div className="flex items-center gap-5">
                                 <label htmlFor="albumTitle" className="text-white w-1/4">Title</label>
-                                <input type="text" name="albumTitle" className="flex-1 p-2 bg-gray-700 text-white rounded-lg" />
+                                <input
+                                    type="text"
+                                    name="albumTitle"
+                                    value={albums.name}
+                                    onChange={(e) => setAlbums({ ...albums, name: e.target.value })}
+                                    className="flex-1 p-2 bg-gray-700 text-white rounded-lg"
+                                />
                             </div>
                             <div className="flex items-center gap-5">
                                 <label htmlFor="albumYear" className="text-white w-1/4">Year</label>
-                                <input type="text" name="albumYear" className="flex-1 p-2 bg-gray-700 text-white rounded-lg" />
+                                <input
+                                    type="text"
+                                    name="albumYear"
+                                    value={albums.releaseYear}
+                                    onChange={(e) => setAlbums({ ...albums, releaseYear: e.target.value })}
+                                    className="flex-1 p-2 bg-gray-700 text-white rounded-lg"
+                                />
                             </div>
                             <div className="flex items-center gap-5">
                                 <label htmlFor="cover" className="text-white w-1/4">Cover Photo</label>
-                                <input type="file" name="cover" accept="image/*" className="flex-1 p-2 bg-gray-700 text-white rounded-lg" onChange={(e) => {
-                                    const file = e.target.files[0];
-                                    if (file) {
-                                        document.getElementById('albumCover').src = URL.createObjectURL(file);
+                                <input
+                                    type="file"
+                                    name="cover"
+                                    accept="image/*"
+                                    className="flex-1 p-2 bg-gray-700 text-white rounded-lg"
+                                    onChange={(e) => {
+                                        const file = e.target.files[0];
+                                        if (file) {
+                                            const imageUrl = URL.createObjectURL(file);
+                                            document.getElementById('albumCover').src = imageUrl;
+                                            setAlbums({ ...albums, imageUrl });
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <div className="flex items-center gap-5">
+                                <label htmlFor="artist" className="text-white w-1/4">Artist</label>
+                                <select
+                                    name="artist"
+                                    value={albums.artist.id}
+                                    onChange={(e) =>
+                                        setAlbums({
+                                            ...albums,
+                                            artist: artists.find(
+                                                (artist) => artist.id === parseInt(e.target.value)
+                                            ) || { id: '', name: '' }
+                                        })
                                     }
-                                }} />
+                                    className="flex-1 p-2 bg-gray-700 text-white rounded-lg"
+                                >
+                                    <option value="">Select Artist</option>
+                                    {artists.map((artist) => (
+                                        <option key={artist.id} value={artist.id}>
+                                            {artist.name}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                             <div className="flex justify-end gap-5 mt-5">
-                                <button type="submit" className="bg-purple-600 text-white px-5 py-2 rounded-lg">Create</button>
-                                <Link to="/album" className="bg-gray-700 text-white px-5 py-2 rounded-lg">Cancel</Link>
+                                <button type="submit" className="bg-purple-600 text-white px-5 py-2 rounded-lg">
+                                    {albums.id ? "Save Changes" : "Create"}
+                                </button>
+                                <Link to="/album" className="bg-gray-700 text-white px-5 py-2 rounded-lg">
+                                    Cancel
+                                </Link>
                             </div>
                         </form>
                     </div>

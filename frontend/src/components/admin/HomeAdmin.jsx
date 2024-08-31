@@ -21,8 +21,8 @@ export default function HomeAdmin(){
   return (
     <div>
               <NavbarAdmin  user={{ fname: 'John', lname: 'Doe' }} />
-    <div className="flex h-screen bg-gray-100">
-      <SidebarAdmin />
+    <div className="bg-gray-900 min-h-screen p-5 flex gap-5">
+                    <SidebarAdmin />    
       <div className="flex flex-col flex-1 p-6 space-y-4">
         <div className=" flex-1 bg-white rounded-lg p-6 shadow-md">
           <div className=" flex justify-between items-center border-b pb-4 mb-4">

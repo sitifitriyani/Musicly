@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import SidebarAdmin from './SidebarAdmin';
+import NavbarAdmin from './NavbarAdmin';
 
 export default function CreateArtist() {
     const [artist, setArtist] = useState({
         id: '',
         name: '',
         country: '',
-        image: ''
+        imageUrl: ''  
     });
     const [alertMessage, setAlertMessage] = useState(null);
     const navigate = useNavigate();
@@ -48,8 +49,13 @@ export default function CreateArtist() {
     function handleAdd() {
         axios.post("http://localhost:8080/artist", artist)
             .then((response) => {
+                if (response.status === 200) {
                 setAlertMessage("New artist added successfully!");
                 navigate('/artist');
+            } else {
+                setAlertMessage("Failed to update artist.");
+            }
+
             })
             .catch((error) => {
                 console.error("Error adding new artist:", error);
@@ -59,19 +65,7 @@ export default function CreateArtist() {
 
     return (
         <div>
-            <nav className="flex items-center justify-between p-5 bg-gray-800 text-white border-b border-gray-700 h-16">
-                <div className="flex items-center gap-2 font-bold text-xl">
-                    <img src="/img/icons/purple-play-button.png" alt="Musicly Logo" className="w-8 h-8" />
-                    <span>Musicly</span>
-                </div>
-                <div className="flex items-center gap-5">
-                    <div className="flex items-center gap-2">
-                        <i className="fas fa-user"></i>
-                    </div>
-                    <Link to="/logout" className="bg-gray-700 text-white px-4 py-2 rounded-full">Logout</Link>
-                </div>
-            </nav>
-
+        <NavbarAdmin />
             <main className="bg-gray-900 min-h-screen p-5 flex gap-5">
                 <div className="w-60 h-max bg-gray-800 rounded-lg">
                     <SidebarAdmin />
@@ -83,7 +77,7 @@ export default function CreateArtist() {
                     </div>
                     <div className="p-5">
                         <form onSubmit={handleSave} className="flex flex-col gap-5">
-                        <img src="" alt="" id="artistImage" className="w-80 h-80 object-cover mb-5" />
+                            <img src={artist.imageUrl || ""} alt="Artist" id="artistImage" className="w-80 h-80 object-cover mb-5" />
                             <div className="flex items-center gap-5">
                                 <label htmlFor="name" className="text-white w-1/4">Name</label>
                                 <input
@@ -106,12 +100,28 @@ export default function CreateArtist() {
                             </div>
                             <div className="flex items-center gap-5">
                                 <label htmlFor="cover" className="text-white w-1/4">Cover Photo</label>
-                                <input type="file" name="cover" accept="image/*" className="flex-1 p-2 bg-gray-700 text-white rounded-lg" onChange={(e) => {
-                                    const file = e.target.files[0];
-                                    if (file) {
-                                        document.getElementById('artistImage').src = URL.createObjectURL(file);
-                                    }
-                                }} />
+                                <input
+                                    type="file"
+                                    name="cover"
+                                    accept="image/*"
+                                    className="flex-1 p-2 bg-gray-700 text-white rounded-lg"
+                                    onChange={(e) => {
+                                        const file = e.target.files[0];
+                                        if (file) {
+                                            const imageUrl = URL.createObjectURL(file);
+                                            document.getElementById('artistImage').src = imageUrl;
+                                            setArtist({ ...artist, imageUrl });
+                                            
+                                        //     const reader = new FileReader();
+                                        //     reader.onloadend = () => {
+                                        //       const imageBase64 = reader.result;  // Ini adalah string Base64
+                                        //      document.getElementById('artistImage').src = imageBase64;
+                                        //      setArtist({ ...artist, imageUrl: imageBase64 });
+                                        //     };
+                                        //    reader.readAsDataURL(file);  // Membaca file sebagai Data URL (Base64)
+                                         }
+                                        }}
+                                />
                             </div>
                             <div className="flex justify-end gap-5 mt-5">
                                 <button type="submit" className="bg-purple-600 text-white px-5 py-2 rounded-lg">
