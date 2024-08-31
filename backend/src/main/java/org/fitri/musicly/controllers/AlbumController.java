@@ -37,8 +37,9 @@ public class AlbumController {
         Album album = albumRepository.findById(id).orElse(null);
         if (album != null) {
             album.setName(albumDetails.getName());
-            album.setImageUrl(albumDetails.getImageUrl());
+            album.setReleaseYear(albumDetails.getReleaseYear());
             album.setArtist(albumDetails.getArtist());
+            album.setImageUrl(albumDetails.getImageUrl());
             return albumRepository.save(album);
         }
         return null;

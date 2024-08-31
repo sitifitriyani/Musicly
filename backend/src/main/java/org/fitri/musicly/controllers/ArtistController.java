@@ -38,6 +38,7 @@ public class ArtistController {
         Artist artist = artistRepository.findById(id).orElse(null);
         if (artist != null) {
             artist.setName(artistDetails.getName());
+            artist.setCountry(artistDetails.getCountry());
             artist.setImageUrl(artistDetails.getImageUrl());
             return artistRepository.save(artist);
         }

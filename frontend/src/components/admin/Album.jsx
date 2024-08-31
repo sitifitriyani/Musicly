@@ -8,6 +8,7 @@ import { Pencil, Trash } from "lucide-react";
 export default function Album() {
     const [album, setAlbum] = useState([]);
     const [alertMessage, setAlertMessage] = useState(null);
+    const [searchTerm, setSearchTerm] = useState(''); // Tambahkan state untuk pencarian
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,10 +39,14 @@ export default function Album() {
         }
     }
 
-    function handleEdit(album) {
-        navigate('/createAlbum', { state: { album } });
+    function handleEdit(albums) {
+        navigate('/createAlbum', { state: { albums } });
     }
 
+    // Filter album berdasarkan input pencarian
+    const filteredAlbum = album.filter(g => 
+        g.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return(
         <div>
@@ -50,14 +55,12 @@ export default function Album() {
                     {alertMessage}
                 </div>
             )}
-                     <NavbarAdmin />
-            {/* Main content */}
+            <NavbarAdmin />
             <main className="bg-gray-900 min-h-screen p-5 flex gap-5">
                 <div className="w-60 h-max bg-gray-800 rounded-lg">
                     <SidebarAdmin />
                 </div>
 
-                {/* Main content */}
                 <div className="flex-1 bg-gray-800 rounded-lg">
                     <div className="flex justify-between items-center p-3">
                         <h1 className="text-2xl font-bold text-gray-50">Album</h1>
@@ -69,6 +72,8 @@ export default function Album() {
                             type="text"
                             placeholder="Search Album..."
                             className="p-2 bg-gray-700 rounded w-full"
+                            value={searchTerm} // Bind value input pencarian ke state
+                            onChange={(e) => setSearchTerm(e.target.value)} // Update state saat input berubah
                         />
                     </div>
 
@@ -84,15 +89,17 @@ export default function Album() {
                             </tr>
                         </thead>
                         <tbody>
-                            {album.map(g => (
+                            {filteredAlbum.map((g, index) => (
                                 <tr key={g.id}>
-                                    <td className="p-2 border">{g.id}</td>
+                                    <td className="p-2 border">{index+1}</td>
                                     <td className="p-2 border">{g.name}</td>
                                     <td className="p-2 border">{g.releaseYear}</td>
                                     <td className="p-2 border">{g.artist.name}</td>
-                                    <td className="p-2 border">{g.image}</td>
                                     <td className="p-2 border">
-                                    <button onClick={() => handleEdit(g)} className="text-blue-500 hover:underline flex items-center gap-2">
+                                        <img src={g.imageUrl} alt={g.name} className="w-16 h-16 object-cover" />
+                                    </td>
+                                    <td className="p-2 border">
+                                        <button onClick={() => handleEdit(g)} className="text-blue-500 hover:underline flex items-center gap-2">
                                             <Pencil className="w-4 h-4" /> Edit
                                         </button>
                                     </td>
@@ -105,10 +112,8 @@ export default function Album() {
                             ))}
                         </tbody>
                     </table>
-            </div>
-                </main>
-
+                </div>
+            </main>
         </div>
-        
     )
 }

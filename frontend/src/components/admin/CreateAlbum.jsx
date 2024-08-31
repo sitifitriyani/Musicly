@@ -47,14 +47,13 @@ export default function CreateAlbum() {
 
     function handleEdit() {
         const formData = new FormData();
-        formData.append('title', albums.title);
-        formData.append('duration', albums.duration);
-        formData.append('albumId', albums.album.id);
-        formData.append('artistId', albums.album.artist.id);
-        formData.append('genreId', albums.genre.id);
-        if (albums.songUrl) formData.append('song', albums.songUrl);
-        if (albums.imageUrl) formData.append('imageUrl', albums.imageUrl);
-
+        formData.append('name', albums.name);
+        formData.append('releaseYear', albums.releaseYear);
+        formData.append('artistId', albums.artist.id); // Menggunakan ID artist
+        if (albums.imageUrl) {
+            formData.append('imageUrl', albums.imageUrl);
+        }
+    
         axios.put(`http://localhost:8080/album/${albums.id}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -62,28 +61,27 @@ export default function CreateAlbum() {
         })
         .then((response) => {
             if (response.status === 200) {
-                setAlertMessage("Track successfully updated!");
-                navigate('/albums');
+                setAlertMessage("Album successfully updated!");
+                navigate('/album');
             } else {
-                setAlertMessage("Failed to update track.");
+                setAlertMessage("Failed to update album.");
             }
         })
         .catch((error) => {
-            console.error("Error updating track:", error);
-            setAlertMessage("Failed to update track.");
+            console.error("Error updating album:", error);
+            setAlertMessage("Failed to update album.");
         });
     }
-
+    
     function handleAdd() {
         const formData = new FormData();
-        formData.append('title', albums.title);
-        formData.append('duration', albums.duration);
-        formData.append('albumId', albums.album.id);
-        formData.append('artistId', albums.album.artist.id);
-        formData.append('genreId', albums.genre.id);
-        if (albums.songUrl) formData.append('song', albums.songUrl);
-        if (albums.imageUrl) formData.append('imageUrl', albums.imageUrl);
-
+        formData.append('name', albums.name);
+        formData.append('releaseYear', albums.releaseYear);
+        formData.append('artistId', albums.artist.id); // Menggunakan ID artist
+        if (albums.imageUrl) {
+            formData.append('imageUrl', albums.imageUrl);
+        }
+    
         axios.post("http://localhost:8080/album", formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -91,19 +89,18 @@ export default function CreateAlbum() {
         })
         .then((response) => {
             if (response.status === 201) {
-                setAlertMessage("New track added successfully!");
-                navigate('/albums');
+                setAlertMessage("New album added successfully!");
+                navigate('/album');
             } else {
-                setAlertMessage("Failed to add new track.");
+                setAlertMessage("Failed to add new album.");
             }
         })
         .catch((error) => {
-            console.error("Error adding new track:", error);
-            setAlertMessage("Failed to add new track.");
+            console.error("Error adding new album:", error);
+            setAlertMessage("Failed to add new album.");
         });
     }
-
-    return (
+        return (
         <div>
             <NavbarAdmin />
             <main className="bg-gray-900 min-h-screen p-5 flex gap-5">

@@ -3,10 +3,13 @@ import SidebarAdmin from "./SidebarAdmin";
 import NavbarAdmin from "./NavbarAdmin";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import {Pencil, Trash} from "lucide-react"
+import { Pencil, Trash } from "lucide-react";
+
 export default function Artist() {
     const [artists, setArtists] = useState([]);
     const [alertMessage, setAlertMessage] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -41,6 +44,10 @@ export default function Artist() {
         navigate('/createArtist', { state: { artist } });
     }
 
+    const filteredArtists = artists.filter(artist =>
+        artist.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <div>
             {alertMessage && (
@@ -49,7 +56,7 @@ export default function Artist() {
                 </div>
             )}
             <NavbarAdmin />
-                <main className="bg-gray-900 min-h-screen p-5 flex gap-5">
+            <main className="bg-gray-900 min-h-screen p-5 flex gap-5">
                 <div className="w-60 h-max bg-gray-800 rounded-lg">
                     <SidebarAdmin />
                 </div>
@@ -69,13 +76,15 @@ export default function Artist() {
                             type="text"
                             placeholder="Search Artist..."
                             className="p-2 bg-gray-700 rounded w-full"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
 
                     <table className="w-full p-5 bg-gray-700 text-white rounded">
                         <thead>
                             <tr>
-                                <th className="p-2 border">ID</th>
+                                <th className="p-2 border">No</th>
                                 <th className="p-2 border">Name</th>
                                 <th className="p-2 border">Country</th>
                                 <th className="p-2 border">Image</th>
@@ -83,13 +92,14 @@ export default function Artist() {
                             </tr>
                         </thead>
                         <tbody>
-                            {artists.map(artist => (
+                            {filteredArtists.map((artist, index) => (
                                 <tr key={artist.id}>
-                                    <td className="p-2 border">{artist.id}</td>
+                                    <td className="p-2 border">{index+1}</td>
                                     <td className="p-2 border">{artist.name}</td>
                                     <td className="p-2 border">{artist.country}</td>
                                     <td className="p-2 border">
-                                        <img src={artist.imageUrl} alt={artist.name} className="w-16 h-16 object-cover" /></td>
+                                        <img src={artist.imageUrl} alt={artist.name} className="w-16 h-16 object-cover" />
+                                    </td>
                                     <td className="p-2 border">
                                         <button onClick={() => handleEdit(artist)} className="text-blue-500 hover:underline flex items-center gap-2">
                                             <Pencil className="w-4 h-4" /> Edit
@@ -104,8 +114,8 @@ export default function Artist() {
                             ))}
                         </tbody>
                     </table>
-            </div>
-                </main>
+                </div>
+            </main>
         </div>
     );
 }

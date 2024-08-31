@@ -48,8 +48,12 @@ export default function Creategenre() {
     function handleAdd() {
         axios.post("http://localhost:8080/genre", genres)
             .then((response) => {
+                if (response.status === 200) {
                 setAlertMessage("New genres added successfully!");
                 navigate('/genre');
+            } else {
+                setAlertMessage("Failed to update genre.");
+            }
             })
             .catch((error) => {
                 console.error("Error adding new genres:", error);
@@ -69,7 +73,7 @@ export default function Creategenre() {
 
                 <div className="flex-1 bg-gray-800 rounded-lg">
                     <div className="flex items-center justify-between p-5 border-b border-gray-700 text-white">
-                        <h2 className="text-xl font-bold">Create genres</h2>
+                        <h2 className="text-xl font-bold">{genres.id ? 'Edit Genre' : 'Create Genre'}</h2>
                     </div>
                     <div className="p-5">
                         <form onSubmit={handleSave} className="flex flex-col gap-5">
@@ -85,7 +89,8 @@ export default function Creategenre() {
                             <div className="flex justify-end gap-5 mt-5">
                             <button type="submit" className="bg-purple-600 text-white px-5 py-2 rounded-lg">
                                     {genres.id ? 'Save Changes' : 'Create'}
-                                </button>                                 <Link to="/genre" className="bg-gray-700 text-white px-5 py-2 rounded-lg">Cancel</Link>
+                                </button>                                 
+                                <Link to="/genre" className="bg-gray-700 text-white px-5 py-2 rounded-lg">Cancel</Link>
                             </div>
                         </form>
                     </div>

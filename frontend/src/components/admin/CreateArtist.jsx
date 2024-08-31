@@ -94,7 +94,7 @@ export default function CreateArtist() {
                                     type="text"
                                     name="country"
                                     value={artist.country}
-                                    onChange={(e) => setArtist({ ...artist, country: e.target.value })}
+                                    onChange={(e) => setArtist({ ...artist, country:e.target.value })}
                                     className="flex-1 p-2 bg-gray-700 text-white rounded-lg"
                                 />
                             </div>
