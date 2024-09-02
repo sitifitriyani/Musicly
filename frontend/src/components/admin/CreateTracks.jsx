@@ -137,6 +137,7 @@ export default function CreateTracks() {
 
     return (
         <div>
+            <img src="b blob:http://localhost:5173/b375fb67-d701-4f65-9f69-9458757d432a" alt="" />
             <NavbarAdmin />
             <main className="bg-gray-900 min-h-screen p-5 flex gap-5">
                 <div className="w-60 h-max bg-gray-800 rounded-lg">

@@ -95,7 +95,7 @@ export default function Tracks() {
                                     <td className="p-2 border">{t.duration}</td>
                                     <td className="p-2 border">{t.album.artist.name}</td>
                                     <td className="p-2 border">{t.album.name}</td>
-                                    <td className="p-2 border">{t.genre.genre}</td>
+                                    <td className="p-2 border">{t.genre}</td>
                                     <td className="p-2 border">
                                     <audio controls>
                                         <source src={t.songUrl} type="audio/mp3" />

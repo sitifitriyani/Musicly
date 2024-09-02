@@ -43,9 +43,9 @@ export default function Artist() {
     function handleEdit(artist) {
         navigate('/createArtist', { state: { artist } });
     }
-
+    
     const filteredArtists = artists.filter(artist =>
-        artist.name.toLowerCase().includes(searchTerm.toLowerCase())
+        artist.name && artist.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
@@ -98,7 +98,7 @@ export default function Artist() {
                                     <td className="p-2 border">{artist.name}</td>
                                     <td className="p-2 border">{artist.country}</td>
                                     <td className="p-2 border">
-                                        <img src={artist.imageUrl} alt={artist.name} className="w-16 h-16 object-cover" />
+                                        <img src={`data:image/png;base64,${artist.image}`} alt={artist.name} className="w-16 h-16 object-cover" />
                                     </td>
                                     <td className="p-2 border">
                                         <button onClick={() => handleEdit(artist)} className="text-blue-500 hover:underline flex items-center gap-2">
