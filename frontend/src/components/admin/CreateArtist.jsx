@@ -50,12 +50,11 @@ export default function CreateArtist() {
         axios.post("http://localhost:8080/artist", artist)
             .then((response) => {
                 if (response.status === 200) {
-                setAlertMessage("New artist added successfully!");
-                navigate('/artist');
-            } else {
-                setAlertMessage("Failed to update artist.");
-            }
-
+                    setAlertMessage("New artist added successfully!");
+                    navigate('/artist');
+                } else {
+                    setAlertMessage("Failed to add artist.");
+                }
             })
             .catch((error) => {
                 console.error("Error adding new artist:", error);
@@ -65,7 +64,7 @@ export default function CreateArtist() {
 
     return (
         <div>
-        <NavbarAdmin />
+            <NavbarAdmin />
             <main className="bg-gray-900 min-h-screen p-5 flex gap-5">
                 <div className="w-60 h-max bg-gray-800 rounded-lg">
                     <SidebarAdmin />
@@ -77,7 +76,12 @@ export default function CreateArtist() {
                     </div>
                     <div className="p-5">
                         <form onSubmit={handleSave} className="flex flex-col gap-5">
-                            <img src={artist.imageUrl || ""} alt="Artist" id="artistImage" className="w-80 h-80 object-cover mb-5" />
+                            <img 
+                                src={artist.imageUrl || "https://via.placeholder.com/300"} 
+                                alt="Artist" 
+                                id="artistImage" 
+                                className="w-80 h-80 object-cover mb-5" 
+                            />
                             <div className="flex items-center gap-5">
                                 <label htmlFor="name" className="text-white w-1/4">Name</label>
                                 <input
@@ -99,28 +103,13 @@ export default function CreateArtist() {
                                 />
                             </div>
                             <div className="flex items-center gap-5">
-                                <label htmlFor="cover" className="text-white w-1/4">Cover Photo</label>
+                                <label htmlFor="imageUrl" className="text-white w-1/4">Image URL</label>
                                 <input
-                                    type="file"
-                                    name="cover"
-                                    accept="image/*"
+                                    type="text"
+                                    name="imageUrl"
+                                    value={artist.imageUrl}
+                                    onChange={(e) => setArtist({ ...artist, imageUrl: e.target.value })}
                                     className="flex-1 p-2 bg-gray-700 text-white rounded-lg"
-                                    onChange={(e) => {
-                                        const file = e.target.files[0];
-                                        if (file) {
-                                            const imageUrl = URL.createObjectURL(file);
-                                            document.getElementById('artistImage').src = imageUrl;
-                                            setArtist({ ...artist, imageUrl });
-                                            
-                                        //     const reader = new FileReader();
-                                        //     reader.onloadend = () => {
-                                        //       const imageBase64 = reader.result;  // Ini adalah string Base64
-                                        //      document.getElementById('artistImage').src = imageBase64;
-                                        //      setArtist({ ...artist, imageUrl: imageBase64 });
-                                        //     };
-                                        //    reader.readAsDataURL(file);  // Membaca file sebagai Data URL (Base64)
-                                         }
-                                        }}
                                 />
                             </div>
                             <div className="flex justify-end gap-5 mt-5">

@@ -18,6 +18,7 @@ export default function Tracks() {
             .catch((error) => {
                 console.error("Error fetching track data:", error);
             });
+            
     }, []);
 
     function handleDelete(id) {
@@ -88,18 +89,23 @@ export default function Tracks() {
                             </tr>
                         </thead>
                         <tbody> 
-                            {tracks.map(t => (
+                            {tracks.map((t)=> (
                                 <tr key={t.id}>
                                     <td className="p-2 border">{t.id}</td>
                                     <td className="p-2 border">{t.title}</td>
                                     <td className="p-2 border">{t.duration}</td>
-                                    <td className="p-2 border">{t.album.artist.name}</td>
-                                    <td className="p-2 border">{t.album.name}</td>
-                                    <td className="p-2 border">{t.genre}</td>
+                                    <td className="p-2 border">{t.album?.name ?? 'Unknown Album'}</td>
+                                    <td className="p-2 border">{t.album?.artist?.name ?? 'Unknown Artist'}</td>
+                                    <td className="p-2 border">{t.genre?.genre}</td>
                                     <td className="p-2 border">
                                     <audio controls>
                                         <source src={t.songUrl} type="audio/mp3" />
-                                            Your browser does not support the audio element.</audio>
+                                            Your browser does not support the audio element.
+                                            </audio>
+                                             {/* <audio controls>
+                                            <source src={`http://localhost:8080/api/music/${t.id}/audio`} type="audio/mp3" />
+                                            Your browser does not support the audio element.
+                                        </audio> */}
                                     </td>
                                     <td className="p-2 border">
                                     <img src={t.imageUrl} alt={t.title} className="w-16 h-16 object-cover" /></td>

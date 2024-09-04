@@ -94,11 +94,11 @@ export default function Artist() {
                         <tbody>
                             {filteredArtists.map((artist, index) => (
                                 <tr key={artist.id}>
-                                    <td className="p-2 border">{index+1}</td>
+                                    <td className="p-2 border">{index + 1}</td>
                                     <td className="p-2 border">{artist.name}</td>
                                     <td className="p-2 border">{artist.country}</td>
                                     <td className="p-2 border">
-                                        <img src={`data:image/png;base64,${artist.image}`} alt={artist.name} className="w-16 h-16 object-cover" />
+                                        <img src={artist.imageUrl} alt={artist.name} className="w-16 h-16 object-cover" />
                                     </td>
                                     <td className="p-2 border">
                                         <button onClick={() => handleEdit(artist)} className="text-blue-500 hover:underline flex items-center gap-2">

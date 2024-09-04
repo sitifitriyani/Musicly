@@ -120,18 +120,12 @@ export default function CreateAlbum() {
                             <div className="flex items-center gap-5">
                                 <label htmlFor="cover" className="text-white w-1/4">Cover Photo</label>
                                 <input
-                                    type="file"
+                                    type="text"
                                     name="cover"
-                                    accept="image/*"
                                     className="flex-1 p-2 bg-gray-700 text-white rounded-lg"
-                                    onChange={(e) => {
-                                        const file = e.target.files[0];
-                                        if (file) {
-                                            const imageUrl = URL.createObjectURL(file);
-                                            document.getElementById('albumCover').src = imageUrl;
-                                            setAlbums({ ...albums, imageUrl });
-                                        }
-                                    }}
+                                    placeholder="Enter image URL..."
+                                    value={albums.imageUrl}
+                                    onChange={(e) => setAlbums({ ...albums, imageUrl: e.target.value })}
                                 />
                             </div>
                             <div className="flex items-center gap-5">
