@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin (origins = "http://localhost:5173")
+@CrossOrigin (origins = "http://localhost:5173", allowCredentials = "true")
 @RestController
 @RequestMapping("/album")
 public class AlbumController {
@@ -29,6 +29,7 @@ public class AlbumController {
 
     @PostMapping
     public Album createAlbum(@RequestBody Album album) {
+        System.out.println("Masuk");
         return albumRepository.save(album);
     }
 

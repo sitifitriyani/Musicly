@@ -30,7 +30,7 @@ export default function SidebarAdmin () {
                     </Link>
                 </li>
                 <li>
-                    <Link  className="p-4 block hover:bg-gray-700 bg-gray-800 font-bold">
+                    <Link to="/historyUser" className="p-4 block hover:bg-gray-700 bg-gray-800 font-bold">
                         <i className="fas fa-star mr-2"></i> History
                     </Link>
                 </li>

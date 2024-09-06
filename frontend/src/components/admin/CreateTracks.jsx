@@ -83,7 +83,9 @@ export default function CreateTracks() {
 
   function handleEdit() {
     axios
-      .put(`http://localhost:8080/api/music/${tracks.id}`, tracks)
+      .put(`http://localhost:8080/api/music/${tracks.id}`, tracks,{
+        withCredentials: true
+      })
       .then((response) => {
         if (response.status === 200) {
           setAlertMessage("Track successfully updated!");
@@ -101,7 +103,9 @@ export default function CreateTracks() {
   function handleAdd() {
 
     axios
-      .post("http://localhost:8080/api/music", tracks)
+      .post("http://localhost:8080/api/music", tracks,{
+        withCredentials: true
+      })
       .then((response) => {
         if (response.status === 200) {
           setAlertMessage("New track added successfully!");

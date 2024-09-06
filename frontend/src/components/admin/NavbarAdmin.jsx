@@ -1,5 +1,5 @@
 // import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import {  Link, Navigate } from 'react-router-dom';
 
 const NavbarAdmin = () => {
     // const [user, setUser] = useState({});
@@ -23,15 +23,30 @@ const NavbarAdmin = () => {
     //     fetchUser();
     // }, [navigate]);
 
-    // const handleLogout = async () => {
-    //     await fetch('/api/logout', { method: 'POST' }); // API call to Java backend
-    //     navigate('/login');
-    // };
+    // const navigate = useNavigate();
 
+    // const handleLogout = async () => {
+    //     try {
+    //         // Send the logout request
+    //         const response = await fetch('http://localhost:8080/api/auth/sign-out', { 
+    //             // method: 'POST', 
+    //             credentials: 'include'
+    //         });
+            
+    //         if (response.ok) {
+    //             // Redirect to the homepage after successful logout
+    //             Navigate('/');
+    //         } else {
+    //             console.error('Logout failed');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error during logout:', error);
+    //     }
+    // };
     return (
-        <nav className="flex items-center justify-between p-5 bg-gray-800 text-white border-b border-gray-700 h-16">
-        <div className="flex items-center gap-2 font-bold text-xl">
-            <img src="/img/icons/purple-play-button.png" alt="Musicly Logo" className="w-8 h-8" />
+        <nav className="flex items-center justify-between p-5 bg-gray-800 text-purple-500 border-b border-gray-700 h-16">
+        <div className="flex items-center gap-2 font-bold text-3xl">
+            <img src="../public/download (3).png" alt="Musicly Logo" className="w-15 h-20" />
             <span>Musicly</span>
         </div>
         <div className="flex items-center gap-5">
@@ -39,7 +54,8 @@ const NavbarAdmin = () => {
                 <i className="fas fa-user"></i>
                 {/* {user && <span>{user.fname} {user.lname}</span>} */}
             </div>
-            <Link to="/logout" className="bg-gray-700 text-white px-4 py-2 rounded-full">Logout</Link>
+            <Link to="/logout" className="bg-purple-700 text-white px-4 py-2 rounded-full">Logout</Link>
+            {/* <button onClick={handleLogout} className="bg-purple-700 text-white px-4 py-2 rounded-full">Logout</button> */}
         </div>
     </nav>
 

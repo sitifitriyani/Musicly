@@ -3,8 +3,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SidebarAdmin from "./SidebarAdmin";
 import NavbarAdmin from './NavbarAdmin';
+import cookie from 'js-cookie'
 
 export default function CreateAlbum() {
+    const token = cookie.get('token');
+    console.log(token);
     const [artists, setArtists] = useState([]);
     const [albums, setAlbums] = useState({
         id: "",
@@ -37,7 +40,13 @@ export default function CreateAlbum() {
     }, []);
 
     function handleAdd() {
-        axios.post("http://localhost:8080/album", albums)
+        axios.post("http://localhost:8080/album", albums, {
+            withCredentials: 'true',  // Perbaiki ini menjadi boolean
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`  // Pastikan token sudah benar
+            }
+        })        
         .then((response) => {
             if (response.status === 200) {
                 setAlertMessage("New album added successfully!");
@@ -53,7 +62,9 @@ export default function CreateAlbum() {
     }
     
     function handleEdit() {
-        axios.put(`http://localhost:8080/album/${albums.id}`, albums)
+        axios.put(`http://localhost:8080/album/${albums.id}`, albums,{
+            withCredentials: true
+        })
         .then((response) => {
             if (response.status === 200) {
                 setAlertMessage("Album successfully updated!");

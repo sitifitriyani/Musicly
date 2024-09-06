@@ -31,7 +31,9 @@ export default function CreateArtist() {
     }
 
     function handleEdit() {
-        axios.put(`http://localhost:8080/artist/${artist.id}`, artist)
+        axios.put(`http://localhost:8080/artist/${artist.id}`, artist,{
+            withCredentials: true
+        })
             .then((response) => {
                 if (response.status === 200) {
                     setAlertMessage("Artist successfully updated!");
@@ -47,7 +49,9 @@ export default function CreateArtist() {
     }
 
     function handleAdd() {
-        axios.post("http://localhost:8080/artist", artist)
+        axios.post("http://localhost:8080/artist", artist,{
+            withCredentials: true
+        })
             .then((response) => {
                 if (response.status === 200) {
                     setAlertMessage("New artist added successfully!");

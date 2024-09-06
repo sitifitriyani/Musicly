@@ -30,7 +30,9 @@ export default function Creategenre() {
     }
 
     function handleEdit() {
-        axios.put(`http://localhost:8080/genre/${genres.id}`, genres)
+        axios.put(`http://localhost:8080/genre/${genres.id}`, genres,{
+            withCredentials: true
+        })
             .then((response) => {
                 if (response.status === 200) {
                     setAlertMessage("genres successfully updated!");
@@ -46,7 +48,9 @@ export default function Creategenre() {
     }
 
     function handleAdd() {
-        axios.post("http://localhost:8080/genre", genres)
+        axios.post("http://localhost:8080/genre", genres,{
+            withCredentials: true
+        })
             .then((response) => {
                 if (response.status === 200) {
                 setAlertMessage("New genres added successfully!");

@@ -24,7 +24,9 @@ export default function Artist() {
 
     function handleDelete(id) {
         if (window.confirm("Are you sure you want to delete this artist?")) {
-            axios.delete(`http://localhost:8080/artist/${id}`)
+            axios.delete(`http://localhost:8080/artist/${id}`,{
+                withCredentials: true
+            })
                 .then((response) => {
                     if (response.status === 200) {
                         setArtists(artists.filter((artist) => artist.id !== id));
@@ -62,7 +64,7 @@ export default function Artist() {
                 </div>
                 <div className="flex-1 bg-gray-800 rounded-lg">
                     <div className="flex justify-between items-center p-3">
-                        <h1 className="text-2xl font-bold text-gray-50">Artist</h1>
+                        <h1 className="text-4xl font-bold text-purple-500">Artist</h1>
                         <Link
                             to="/createArtist"
                             className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"

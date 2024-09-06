@@ -6,7 +6,7 @@ export default function Signup() {
     email: '',
     username: '',
     password: '',
-    role: 'USER' // Set default role to USER
+    role: 'user' // Set default role to USER
   });
 
   const [errMsg, setErrMsg] = useState('');
@@ -26,10 +26,14 @@ export default function Signup() {
     try {
       const response = await fetch('http://localhost:8080/api/auth/sign-up', {
         method: 'POST',
+        // credentials:'include',
         headers: {
           'Content-Type': 'application/json',
+        //   Authorization : "Bearer " + JSON.parse(localStorage.getItem("user"))
+
         },
         body: JSON.stringify({ email, username, password, role }),
+        
       });
 
       const data = await response.json();
@@ -38,7 +42,7 @@ export default function Signup() {
       if (response.ok) {
         setShowSuccess(true);
         setErrMsg('Successfully registered');
-        navigate('/signIn');
+        navigate('/signin');
         
       } else {
         setShowError(true);
@@ -54,7 +58,7 @@ export default function Signup() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900">
       <div className="logo mb-8">
         <a href="#" className="flex items-center gap-2 text-4xl font-bold text-purple-500">
-          <img src="/img/icons/purple-play-button.png" alt="Musicly" className="w-12 h-12" /> Musicly
+          <img src="../public/download (3).png" alt="Musicly" className="w-20 h-25" /> Musicly
         </a>
       </div>
       {showError && (
@@ -109,8 +113,8 @@ export default function Signup() {
             onChange={handleChange}
             className="w-full px-3 py-2 bg-gray-700 text-gray-300 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
           >
-            <option value="USER">User</option>
-            <option value="ADMIN">Admin</option>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
           </select>
         </div>
         <button type="submit" className="w-full py-2 text-white bg-purple-600 rounded-md hover:bg-purple-700 transition duration-300">

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "./Sidebar";
-import Player from "./Player";
 import Header from "./Header";
 import Modal from "./Modal";
 
@@ -32,7 +31,7 @@ export default function ArtistUser() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {/* Render Artist Cards */}
             {artists.map((artist) => (
-              <div key={artist.id} className="bg-gray-800 p-4 rounded-lg shadow-lg">
+              <div key={artist.id} className="bg-gray-800 p-4 rounded-lg shadow-lg ">
                 <img
                   src={artist.imageUrl}
                   alt={artist.name}
@@ -46,7 +45,7 @@ export default function ArtistUser() {
           </div>
         </main>
       </div>
-      <Player />
+      {/* <Player /> */}
       {modalType && <Modal type={modalType} onClose={closeModal} />}
     </>
   );

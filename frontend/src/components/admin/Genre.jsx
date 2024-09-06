@@ -4,12 +4,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import NavbarAdmin from './NavbarAdmin';
 import SidebarAdmin from './SidebarAdmin';
 import { Pencil, Trash } from 'lucide-react';
+import cookie from 'js-cookie'
 
 export default function Genre() {
     const [genres, setGenres] = useState([]);
     const [alertMessage, setAlertMessage] = useState(null);
     const [searchTerm, setSearchTerm] = useState(''); // Tambahkan state untuk pencarian
     const navigate = useNavigate();
+    const token = cookie.get('token')
 
     useEffect(() => {
         axios.get("http://localhost:8080/genre")
@@ -23,7 +25,9 @@ export default function Genre() {
 
     function handleDelete(id) {
         if (window.confirm("Are you sure you want to delete this genre?")) {
-            axios.delete(`http://localhost:8080/genre/${id}`)
+            axios.delete(`http://localhost:8080/genre/${id}`,{
+                withCredentials: 'true'
+            })
                 .then((response) => {
                     if (response.status === 200) {
                         setGenres(genres.filter((genre) => genre.id !== id));
@@ -67,7 +71,7 @@ export default function Genre() {
                 {/* Main content */}
                 <div className="flex-1 bg-gray-800 rounded-lg">
                     <div className="flex justify-between p-3 items-center">
-                        <h1 className="text-2xl font-bold text-gray-50">Genre</h1>
+                        <h1 className="text-4xl font-bold text-purple-500">Genre</h1>
                         <Link to="/createGenre" className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">Create Genre</Link>
                     </div>
 

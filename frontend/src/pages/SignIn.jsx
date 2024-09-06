@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import cookie from "js-cookie";
+
 
 export default function SignIn() {
   const [formData, setFormData] = useState({
@@ -21,12 +23,16 @@ export default function SignIn() {
     const { email, password } = formData;
 
     try {
-      const response = await fetch('http://localhost:8080/api/auth/sign-in', {
+      const response = await fetch(`http://localhost:8080/api/auth/sign-in?email=${email}&password=${password}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        // credentials:'include',
+        // headers: {
+        //   'Content-Type': 'application/json',
+        //   // Authorization : "Bearer " + JSON.parse(localStorage.getItem("user"))
+
+        // },
         body: JSON.stringify({ email, password }),
+        // credentials: "include" 
       });      
 
       if (!response.ok) {
@@ -36,7 +42,7 @@ export default function SignIn() {
       }
 
       const data = await response.json();
-
+      cookie.set('token',data.token);
       if (data.role === 'admin') {
         navigate('/admin');  // Mengarahkan ke dashboard admin
       } else {
@@ -52,7 +58,7 @@ export default function SignIn() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900">
       <div className="logo mb-8">
         <a href="#" className="flex items-center gap-2 text-4xl font-bold text-purple-500">
-          <img src="/img/icons/purple-play-button.png" alt="Musicly" className="w-12 h-12" /> Musicly
+          <img src="../public/download (3).png" alt="Musicly" className="w-20 h-25" /> Musicly
         </a>
       </div>
       {showError && (

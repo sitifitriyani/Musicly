@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nimbusds.jose.JOSEException;
@@ -23,7 +24,7 @@ import com.nimbusds.jose.JOSEException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
-@CrossOrigin (origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -68,11 +69,8 @@ public class AuthController {
         return ResponseEntity.ok(success);
     }
     @PostMapping("/sign-in")
-    public ResponseEntity<Map<String, String>> signIn(@RequestBody Map<String, String> userMap,
+    public ResponseEntity<Map<String, String>> signIn(@RequestParam String email,@RequestParam String password,
             HttpServletResponse response) throws JOSEException {
-        String email = userMap.get("email");
-        String password = userMap.get("password");
-        
         User user = userRepository.findByEmail(email);
         if (user != null) {
             if (passwordEncoder.matches(password, user.getPassword())) {
@@ -99,12 +97,12 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
         }
     }
-        @GetMapping("me")
+        @GetMapping("/me")
     public User me() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    @PostMapping("sign-out")
+    @PostMapping("/sign-out")
     public void signOut(HttpServletResponse response) {
         jwtService.signOut(response);
     }

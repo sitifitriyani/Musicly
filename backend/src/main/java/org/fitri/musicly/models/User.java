@@ -31,7 +31,7 @@ public class User implements UserDetails {
 
     private String role;
 
-    public String getUsername(){
+    public String getEmail(){
         return this.email;
     }
     public Collection<? extends GrantedAuthority> getAuthorities() {

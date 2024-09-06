@@ -23,7 +23,9 @@ export default function Album() {
 
     function handleDelete(id) {
         if (window.confirm("Are you sure you want to delete this Album?")) {
-            axios.delete(`http://localhost:8080/album/${id}`)
+            axios.delete(`http://localhost:8080/album/${id}`,{
+                withCredentials: true
+            })
                 .then((response) => {
                     if (response.status === 200) {
                         setAlbum(album.filter((album) => album.id !== id));
@@ -63,7 +65,7 @@ export default function Album() {
 
                 <div className="flex-1 bg-gray-800 rounded-lg">
                     <div className="flex justify-between items-center p-3">
-                        <h1 className="text-2xl font-bold text-gray-50">Album</h1>
+                        <h1 className="text-4xl font-bold text-purple-500">Album</h1>
                         <Link to="/createAlbum" className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">Create Album</Link>
                     </div>
 

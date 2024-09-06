@@ -19,6 +19,9 @@ import Home from './components/user/Home.jsx'
 import AlbumUser from './components/user/AlbumUser.jsx'
 import ArtistUser from './components/user/ArtistUser.jsx'
 import GenreUser from './components/user/GenreUser.jsx'
+import HistoryUser from './components/admin/HistoryUser.jsx'
+import TracksUser from './components/user/TracksUser.jsx'
+import Favorite from './components/user/Favorite.jsx'
 const router = createBrowserRouter([{
   path: "/",
   element : <App />,
@@ -32,6 +35,10 @@ const router = createBrowserRouter([{
       element : <Home />
     },
     {
+      path:"/tracksUser",
+      element : <TracksUser />
+    },
+    {
       path:"/albumUser",
       element : <AlbumUser />
     },
@@ -43,10 +50,10 @@ const router = createBrowserRouter([{
       path:"/genreUser",
       element : <GenreUser />
     },
-    // {
-    //   path:"/favorite",
-    //   element : <Favorit />
-    // },
+    {
+      path:"/favorite",
+      element : <Favorite />
+    },
     {
       path:"/signin",
       element : <SignIn />
@@ -86,6 +93,10 @@ const router = createBrowserRouter([{
     {
       path:"/createTracks",
       element : <CreateTracks />
+    },
+    {
+      path:"/historyUser",
+      element : <HistoryUser />
     },
     {
       path:"/admin",
