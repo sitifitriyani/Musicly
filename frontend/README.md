@@ -3,6 +3,10 @@
 ## Deskripsi
 Musicly adalah sebuah aplikasi pemutar musik yang memberikan pengalaman seperti menggunakan Spotify. Aplikasi ini memungkinkan pengguna untuk mendengarkan musik dari berbagai genre, membuat playlist, serta menelusuri lagu-lagu dari artis dan album favorit. Musicly dibangun menggunakan **React** untuk frontend, **Java (Spring Boot)** untuk backend, dan **MariaDB** sebagai database. Aplikasi ini memiliki tampilan antarmuka yang mirip dengan desain modern aplikasi pemutar musik populer.
 
+## ERD
+
+![ERD](./public/ERD.png)
+
 ## Fitur-Fitur
 
 ### Admin
