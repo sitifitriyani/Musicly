@@ -5,7 +5,7 @@ Musicly adalah sebuah aplikasi pemutar musik yang memberikan pengalaman seperti 
 
 ## ERD
 
-![ERD](./public/ERD.png)
+![ERD](../frontend/public/ERD.png)
 
 ## Fitur-Fitur
 

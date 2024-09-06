@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import cookie from 'js-cookie';
+import { CircleUserRound } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   // const [isProfileOpen, setProfileOpen] = useState(false);
@@ -7,6 +10,8 @@ export default function Header() {
   const [userName, setUserName] = useState(""); // Nama pengguna yang sebenarnya
   const [userEmail, setUserEmail] = useState(""); // Email pengguna
   const [tracks, setTracks] = useState([]); // Daftar lagu yang diambil dari backend
+  const token = cookie.get('token');
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Ambil data tracks saat komponen di-render
@@ -39,17 +44,17 @@ export default function Header() {
   };
 
   const handleLogout = async () => {
-    try {
-      await axios.post("http://localhost:8080/api/auth/sign-out", {}, {
-        withCredentials: true // Mengirimkan cookie dengan permintaan
+      await fetch("http://localhost:8080/api/auth/sign-out", {
+        method:"POST",
+        credentials: 'include',
+        header: {
+          "Content-Type": "application/json",
+          "Authentication":`Bearer ${token}`
+        }
       });
       alert("Logged out successfully");
-      window.location.href = "/login";
-    } catch (error) {
-      console.error("Error logging out:", error);
-      alert("Logout failed. Please try again.");
-    }
-  };
+      navigate ("/signin") ;
+      };
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
@@ -65,8 +70,11 @@ export default function Header() {
   return (
     <nav className="bg-gray-800 text-white p-4">
       <div className="mx-auto flex items-center justify-between">
-        <a href="#" className="text-2xl font-bold">Musicly</a>
-        <div className="flex space-x-4 items-center">
+      <div className="flex items-center gap-2 font-bold text-4xl">
+            <img src="../public/download (3).png" alt="Musicly Logo" className="w-15 h-20" />
+            <h1 className="text-purple-500">Musicly</h1>
+        </div>
+                <div className="flex space-x-4 items-center">
           <input
             type="text"
             value={searchTerm}
@@ -76,13 +84,12 @@ export default function Header() {
           />
           <button
             onClick={handleProfileClick}
-            className="bg-gray-600 px-4 py-2 rounded hover:bg-gray-500"
-          >
-            Profile
+            className="flex items-center gap-2"          >
+            <CircleUserRound className="text-purple-500" size={48} strokeWidth={1.75} />
           </button>
           <button
             onClick={handleLogout}
-            className="bg-red-500 px-4 py-2 rounded hover:bg-red-600"
+            className="bg-purple-700 text-white px-4 py-2 rounded-full"
           >
             Logout
           </button>
@@ -91,3 +98,4 @@ export default function Header() {
     </nav>
   );
 }
+

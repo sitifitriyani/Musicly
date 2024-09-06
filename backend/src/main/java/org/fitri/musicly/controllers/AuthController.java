@@ -24,7 +24,7 @@ import com.nimbusds.jose.JOSEException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:5173",allowCredentials = "true")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -97,13 +97,14 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
         }
     }
-        @GetMapping("/me")
+    @GetMapping("/me")
     public User me() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     @PostMapping("/sign-out")
     public void signOut(HttpServletResponse response) {
+        System.out.println("logout");
         jwtService.signOut(response);
     }
 }

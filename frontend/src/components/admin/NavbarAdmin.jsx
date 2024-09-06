@@ -1,9 +1,12 @@
 // import React, { useEffect, useState } from 'react';
-import {  Link, Navigate } from 'react-router-dom';
-
+import { CircleUserRound } from 'lucide-react';
+import cookie from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 const NavbarAdmin = () => {
+    const token = cookie.get('token');
+
     // const [user, setUser] = useState({});
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     // useEffect(() => {
     //     const fetchUser = async () => {
@@ -25,37 +28,31 @@ const NavbarAdmin = () => {
 
     // const navigate = useNavigate();
 
-    // const handleLogout = async () => {
-    //     try {
-    //         // Send the logout request
-    //         const response = await fetch('http://localhost:8080/api/auth/sign-out', { 
-    //             // method: 'POST', 
-    //             credentials: 'include'
-    //         });
-            
-    //         if (response.ok) {
-    //             // Redirect to the homepage after successful logout
-    //             Navigate('/');
-    //         } else {
-    //             console.error('Logout failed');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error during logout:', error);
-    //     }
-    // };
+    const handleLogout = async () => {
+        await fetch("http://localhost:8080/api/auth/sign-out", {
+          method:"POST",
+          credentials: 'include',
+          header: {
+            "Content-Type": "application/json",
+            "Authentication":`Bearer ${token}`
+          }
+        });
+        alert("Logged out successfully");
+        navigate ("/signin") ;
+    };
+  
     return (
-        <nav className="flex items-center justify-between p-5 bg-gray-800 text-purple-500 border-b border-gray-700 h-16">
-        <div className="flex items-center gap-2 font-bold text-3xl">
-            <img src="../public/download (3).png" alt="Musicly Logo" className="w-15 h-20" />
-            <span>Musicly</span>
+        <nav className="flex items-center justify-between p-5 bg-gray-800 text-purple-500 border-b border-gray-700 h-20">
+        <div className="flex items-center gap-2 font-bold text-5xl">
+            <img src="../public/download (3).png" alt="Musicly Logo" className="w-20 h-25" />
+            <h1 className="text-purple-500">Musicly</h1>
         </div>
         <div className="flex items-center gap-5">
             <div className="flex items-center gap-2">
-                <i className="fas fa-user"></i>
-                {/* {user && <span>{user.fname} {user.lname}</span>} */}
+            <CircleUserRound size={48} strokeWidth={1.75} />
             </div>
-            <Link to="/logout" className="bg-purple-700 text-white px-4 py-2 rounded-full">Logout</Link>
-            {/* <button onClick={handleLogout} className="bg-purple-700 text-white px-4 py-2 rounded-full">Logout</button> */}
+            {/* <Link to="/logout" className="bg-purple-700 text-white px-4 py-2 rounded-full">Logout</Link> */}
+            <button onClick={handleLogout} className="bg-purple-700 text-white px-4 py-2 rounded-full">Logout</button>
         </div>
     </nav>
 

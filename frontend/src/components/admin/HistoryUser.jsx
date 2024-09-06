@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import NavbarAdmin from "./NavbarAdmin";
 import SidebarAdmin from "./SidebarAdmin";
-import { Pencil, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
 
 const HistoryUser = () => {
   const [users, setUsers] = useState([]);
   const [alertMessage, setAlertMessage] = useState(null);
   const [searchTerm, setSearchTerm] = useState(""); // Tambahkan state untuk pencarian
-  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -22,10 +20,6 @@ const HistoryUser = () => {
       });
   }, []);
 
-  //   // Toggle menu sidebar
-  //   const handleMenuClick = () => {
-  //     setShowMenu(!showMenu);
-  //   };
 
   // Handle delete user
   function handleDelete(id) {
@@ -49,10 +43,6 @@ const HistoryUser = () => {
     }
   }
 
-  // Handle edit user
-  function handleEdit(user) {
-    navigate("/editUser", { state: { user } });
-  }
 
   // Filter users berdasarkan input pencarian
   const filteredUsers = users.filter((user) =>
@@ -70,12 +60,6 @@ const HistoryUser = () => {
         <div className="flex-1 bg-gray-800 rounded-lg">
           <div className="flex justify-between p-3 items-center">
             <h1 className="text-4xl font-bold text-purple-500">History</h1>
-            {/* <Link
-              to="/createGenre"
-              className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
-            >
-              Create Genre
-            </Link> */}
           </div>
           <div className="p-3">
             <input
@@ -127,12 +111,6 @@ const HistoryUser = () => {
                         {user.role}
                       </td>
                       <td className="flex justify-evenly p-2 border">
-                        <button
-                          onClick={() => handleEdit(user)}
-                          className="text-blue-500 hover:underline flex items-center gap-2"
-                        >
-                          <Pencil className="w-4 h-4" /> Edit
-                        </button>
                         <button
                           onClick={() => handleDelete(user.id)}
                           className="text-red-500 hover:underline flex items-center gap-2"
